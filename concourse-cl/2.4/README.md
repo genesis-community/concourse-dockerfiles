@@ -15,4 +15,3 @@ By default the image will execute a lisp code stored in the file
 docker run -it \
            -v ~/code/my-lisp-code-directory:/u \
            genesiscommunity/concourse-cl:ubuntu-jammy
-
