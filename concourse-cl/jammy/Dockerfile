@@ -1,17 +1,18 @@
 ARG BASE_IMAGE=genesiscommunity/concourse:ubuntu-jammy
 FROM --platform=linux/amd64 $BASE_IMAGE
+ARG SF_SBCL_VERSION
 
 # RUN apt-get update && \
 #     apt-get install -y --no-install-recommends sbcl && \
 #     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /tmp
-RUN wget https://sourceforge.net/projects/sbcl/files/sbcl/2.3.9/sbcl-2.3.9-x86-64-linux-binary.tar.bz2/download -O sbcl-2.3.9-x86-64-linux-binary.tar.bz2 && \
-tar xjf sbcl-2.3.9-x86-64-linux-binary.tar.bz2
-WORKDIR sbcl-2.3.9-x86-64-linux
+RUN wget https://sourceforge.net/projects/sbcl/files/sbcl/${SF_SBCL_VERSION}/sbcl-${SF_SBCL_VERSION}-x86-64-linux-binary.tar.bz2/download -O sbcl-${SF_SBCL_VERSION}-x86-64-linux-binary.tar.bz2 && \
+tar xjf sbcl-${SF_SBCL_VERSION}-x86-64-linux-binary.tar.bz2
+WORKDIR sbcl-${SF_SBCL_VERSION}-x86-64-linux
 RUN INSTALL=/usr/local sh install.sh
 WORKDIR /tmp
-RUN rm -rf sbcl-2.3.9-x86-64-linux*
+RUN rm -rf sbcl-${SF_SBCL_VERSION}-x86-64-linux*
 
 ARG BUILD_DATE
 ARG VCS_URL=https://github.com/genesis-community/concourse-dockerfiles
