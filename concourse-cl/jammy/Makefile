@@ -2,11 +2,12 @@ ORG := genesiscommunity
 NAME := concourse-cl
 TAG := ubuntu-jammy
 PLATFORM := linux/amd64
+SF_SBCL_VERSION := 2.3.10
 
 
 docker:
 	docker build \
-	   --build-arg SF_SBCL_VERSION="2.3.9" \
+	   --build-arg SF_SBCL_VERSION="$(SF_SBCL_VERSION)" \
 	   --build-arg BUILD_DATE="$(shell date -u -Iminutes)" \
 	   --build-arg VCS_URL="$(shell git ls-remote --get-url origin)" \
 	   --build-arg VCS_REF="$(shell git rev-parse --short HEAD)" \
