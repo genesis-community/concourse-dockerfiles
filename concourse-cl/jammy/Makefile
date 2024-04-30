@@ -2,7 +2,7 @@ ORG := genesiscommunity
 NAME := concourse-cl
 TAG := ubuntu-jammy
 PLATFORM := linux/amd64
-SF_SBCL_VERSION := 2.3.11
+SF_SBCL_VERSION := 2.4.4
 
 
 docker:
