@@ -4,6 +4,11 @@ TAG := ubuntu-jammy
 PLATFORM := linux/amd64
 SF_SBCL_VERSION := 2.4.4
 
+.PHONY: build-pipeline-arg-file
+
+build-pipeline-arg-file: export SF_SBCL_VERSION:=2.4.4
+build-pipeline-arg-file:
+	./build-pipeline-arg-file
 
 docker:
 	docker build \
