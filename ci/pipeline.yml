@@ -9,9 +9,6 @@ groups:
   - name: concourse-go
     jobs:
     - "build-concourse-go_*"
-  - name: concourse-cl
-    jobs:
-    - "build-concourse-cl_*"
 
 notgroups:
   - name: concourse-java
