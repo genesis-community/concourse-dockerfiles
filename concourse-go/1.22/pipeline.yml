@@ -1,0 +1,74 @@
+---
+resource_types:
+- name: static
+  type: docker-image
+  source: { repository: ktchen14/static-resource }
+
+resources:
+  # Dockerfile source
+  - name: 'concourse-go_1_22-dockerfile'
+    .: (( inject meta.resources.dockerfiles ))
+    source:
+      paths:
+        - concourse-go/1.22/Dockerfile
+
+  # Triggers for new version of golang 1.22
+  - name: golang-version
+    .: (( inject meta.resources.dockerhub ))
+    type: registry-image
+    source:
+      email: ((prune))
+      repository: golang
+      tag: '1.22'
+
+  # Extra tags
+  - name: concourse-go-1.22-additional-tags
+    type: static
+    source: 
+      values: "1.22 1.22-ubuntu-jammy"
+
+  # Build outputs
+  - name: concourse-go_latest-image
+    .: (( inject meta.resources.local-registry ))
+    source:
+      repository: (( concat meta.image-registry.account "/concourse-go" ))
+      tag: latest
+
+  - name: concourse-go_latest-dockerhub
+    .: (( inject meta.resources.dockerhub ))
+    source:
+      repository: (( concat meta.dockerhub.account "/concourse-go" ))
+      tag: latest
+
+
+jobs:
+  - name: build-concourse-go_1_22
+    public: true
+    plan:
+      - get: additional-tags
+        resource: concourse-go-1.22-additional-tags
+
+      - get: concourse-go_1_22-dockerfile
+        trigger: true
+
+      - get: golang-version
+        trigger: true
+        params: {skip_download: true}
+
+      - get: concourse-image
+        resource: concourse_ubuntu-jammy-image
+        trigger: true
+        passed: [ 'build-concourse_ubuntu-jammy' ]
+        params: {skip_download: true}
+
+      - put: 'concourse-go_latest-image'
+        get_params: {save: true}
+        params:
+          build: 'concourse-go_1_22-dockerfile/concourse-go/1.22'
+          additional_tags: additional-tags/values
+
+      - put: concourse-go_latest-dockerhub
+        params:
+          load: concourse-go_latest-image
+          additional_tags: additional-tags/values
+
