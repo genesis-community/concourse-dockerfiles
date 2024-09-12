@@ -1,0 +1,8 @@
+cat <<-EOF >pipeline-build-args-file
+{
+    "SF_SBCL_VERSION": "${SF_SBCL_VERSION}",
+    "BUILD_DATE": "$(date -u -Iminutes)",
+    "VCS_URL": "$(git ls-remote --get-url origin)",
+    "VCS_REF": "$(git rev-parse --short HEAD)"
+}
+EOF
