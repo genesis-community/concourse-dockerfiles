@@ -2,8 +2,13 @@ ORG := genesiscommunity
 NAME := concourse-cl
 TAG := ubuntu-jammy
 PLATFORM := linux/amd64
-SF_SBCL_VERSION := 2.4.4
+SF_SBCL_VERSION := 2.4.11
 
+.PHONY: build-pipeline-arg-file
+
+build-pipeline-arg-file: export SF_SBCL_VERSION:=$(SF_SBCL_VERSION)
+build-pipeline-arg-file:
+	./build-pipeline-arg-file
 
 docker:
 	docker build \
