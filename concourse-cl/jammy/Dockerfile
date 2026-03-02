@@ -16,6 +16,14 @@ RUN case "${SBCL_DIST}" in \
     cd /tmp && \
     rm -rf sbcl-${SBCL_VERSION}-x86-64-linux*
 
+# Install Quicklisp
+RUN curl -L -o /tmp/quicklisp.lisp https://beta.quicklisp.org/quicklisp.lisp && \
+    sbcl --non-interactive \
+         --load /tmp/quicklisp.lisp \
+         --eval '(quicklisp-quickstart:install)' \
+         --eval '(ql-util:without-prompting (ql:add-to-init-file))' && \
+    rm /tmp/quicklisp.lisp
+
 ARG BUILD_DATE
 ARG VCS_URL=https://github.com/genesis-community/concourse-dockerfiles
 ARG VCS_REF
