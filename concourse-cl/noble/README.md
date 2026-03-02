@@ -1,4 +1,4 @@
-genesiscommunity/concourse-cl:ubuntu-jammy
+genesiscommunity/concourse-cl:ubuntu-noble
 ===========================================
 
 Task Image for running Concourse Pipelines - Common Lisp
@@ -25,7 +25,7 @@ Run a Lisp script:
 ```bash
 docker run -it \
        -v ~/code/my-lisp-code-directory:/u \
-       genesiscommunity/concourse-cl:ubuntu-jammy
+       genesiscommunity/concourse-cl:ubuntu-noble
 ```
 
 By default the image executes `/u/boot.lisp`.
@@ -36,22 +36,22 @@ From the repository root:
 
 ```bash
 # Build the base image and CL image
-make cl-jammy
+make cl-noble
 
 # Build with a specific SBCL version
-make cl-jammy SBCL_VERSION=2.6.2
+make cl-noble SBCL_VERSION=2.6.2
 
 # Switch SBCL distribution source (roswell or sourceforge)
-make cl-jammy SBCL_DIST=sourceforge
+make cl-noble SBCL_DIST=sourceforge
 
 # Override platform (default: linux/amd64)
-make cl-jammy PLATFORM=linux/arm64
+make cl-noble PLATFORM=linux/arm64
 ```
 
-Or build from the `concourse-cl/jammy/` directory:
+Or build from the `concourse-cl/noble/` directory:
 
 ```bash
-cd concourse-cl/jammy
+cd concourse-cl/noble
 make docker                          # build the image
 make test                            # run hello-world test
 make publish                         # push to Docker Hub
@@ -62,7 +62,7 @@ make publish                         # push to Docker Hub
 Example Dockerfile for building a Common Lisp project:
 
 ```dockerfile
-FROM genesiscommunity/concourse-cl:ubuntu-jammy
+FROM genesiscommunity/concourse-cl:ubuntu-noble
 WORKDIR /app
 COPY . .
 RUN sbcl --non-interactive \
