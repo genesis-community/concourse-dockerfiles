@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=genesiscommunity/concourse:ubuntu-jammy
+ARG BASE_IMAGE=genesiscommunity/concourse:ubuntu-noble
 FROM --platform=linux/amd64 $BASE_IMAGE
 ARG SBCL_VERSION
 

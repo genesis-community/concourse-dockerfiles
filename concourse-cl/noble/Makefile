@@ -1,6 +1,6 @@
 ORG := genesiscommunity
 NAME := concourse-cl
-TAG := ubuntu-jammy
+TAG := ubuntu-noble
 PLATFORM := linux/amd64
 SBCL_VERSION := 2.6.2
 
