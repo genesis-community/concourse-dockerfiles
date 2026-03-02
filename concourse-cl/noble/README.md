@@ -72,6 +72,27 @@ RUN sbcl --non-interactive \
 CMD ["/app/my-app"]
 ```
 
+## Compatibility Notes
+
+The Roswell SBCL binary is built for broad Linux compatibility. It only
+requires **GLIBC 2.17** or newer, making it safe to run on any modern
+Linux distribution.
+
+Libraries loaded at runtime via CFFI (such as OpenSSL via cl+ssl) use
+`dlopen` and resolve against the shared libraries inside the container.
+Since each image is self-contained, there are no cross-distribution
+glibc or library version issues.
+
+**Important:** A binary compiled with `save-lisp-and-die` inside one
+image (e.g. noble with glibc 2.39) should not be extracted and run on
+an older host (e.g. jammy with glibc 2.35). Always run the binary in
+the same container environment it was built in.
+
+| Image | Ubuntu | glibc | OpenSSL |
+|-------|--------|-------|---------|
+| ubuntu-jammy | 22.04 LTS | 2.35 | 3.0.2 |
+| ubuntu-noble | 24.04 LTS | 2.39 | 3.0.13 |
+
 ## Makefile Variables
 
 | Variable | Default | Description |
