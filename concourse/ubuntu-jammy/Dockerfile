@@ -44,6 +44,7 @@ RUN apt-get update \
                    libyaml-dev \
                    lsof \
                    openssl \
+                   procps \
                    ruby \
                    ruby-dev \
                    sipcalc \
